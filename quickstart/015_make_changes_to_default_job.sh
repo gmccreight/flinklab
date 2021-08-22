@@ -7,10 +7,9 @@
 
 set -e
 
-# Copy the code from the folder to the destination
-rm flinklabqs/src/main/java/org/flinklab/flinklabqs/BatchJob.java
-rm flinklabqs/src/main/java/org/flinklab/flinklabqs/StreamingJob.java
+rm -f flinklabqs/src/main/java/org/flinklab/flinklabqs/*
 
+# Copy the code from the folder to the destination
 cp override_code_to_copy_into_flinklabqs/*.java flinklabqs/src/main/java/org/flinklab/flinklabqs
 
 # Replace the StreamingJob with WordCount
