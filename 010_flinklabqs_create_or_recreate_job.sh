@@ -21,16 +21,11 @@ mvn archetype:generate								\
   -Dpackage=org.flinklab.flinklabqs					\
   -DinteractiveMode=false
 
-#
-# Give some guidance
-#
-echo -e "\\n\\n"
-echo -e "\\tA sample quickstart Flink Job has been created."
-echo -e "\\tSwitch into the directory using"
-echo -e "\\t\\t cd $PACKAGE"
-echo -e "\\tImport the project there using your favorite IDE (Import it as a maven project)"
-echo -e "\\tBuild a jar inside the directory using"
-echo -e "\\t\\t mvn clean package"
-echo -e "\\tYou will find the runnable jar in $PACKAGE/target"
-echo -e "\\tConsult our website if you have any troubles: http://flink.apache.org/community.html#mailing-lists"
-echo -e "\\n\\n"
+# Copy the code from the folder to the destination
+rm flinklabqs/src/main/java/org/flinklab/flinklabqs/BatchJob.java
+rm flinklabqs/src/main/java/org/flinklab/flinklabqs/StreamingJob.java
+cp flinklabqs_code/*.java flinklabqs/src/main/java/org/flinklab/flinklabqs
+
+# Replace the StreamingJob with WordCount
+cat flinklabqs/pom.xml | sed -e 's/StreamingJob/WordCount/' > flinklabqs/pom_replacement.xml
+mv flinklabqs/pom_replacement.xml flinklabqs/pom.xml

@@ -27,19 +27,13 @@ if ! [[ `ps aux | grep java | grep flink` ]]; then
   ./bin/start-cluster.sh
 fi
 
-rm -f log/flink-*-taskexecutor-*.out
+sleep 1
 
-./bin/flink run $this_abs_path/flinklabqs/target/flinklabqs-0.1.jar
+# Wait until it's *really* running before creating the job
 
-# Now you can look at http://localhost:8081/
-
-for i in `seq 1 10`; do
-  echo "`date`: $i of 10: showing one line of log output, then pausing for a second at `date`"
-  echo ""
-  if [[ `ls log | grep "taskexecutor-.*\.out"` ]]; then
-    tail -n 1 log/*taskexecutor-*.out
-  fi
+while ! [[ `ps aux | grep java | grep flink` ]]; do
+  echo "`date`: waiting for cluster to start"
   sleep 1
 done
-exit
 
+./bin/flink run $this_abs_path/flinklabqs/target/flinklabqs-0.1.jar
