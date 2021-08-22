@@ -1,4 +1,14 @@
-### Installation
+### How to
+
+Install all the prerequisite stuff described below (Java 8, Flink, Maven), then
+cd into quickstart-scala, then run `./000_all.sh` and it will run a word count on
+a cluster on your local machine and print the result to stdout.
+
+Within that `quickstart-scala`, project tweak the code in the
+`override_code_to_copy_into_flinklabqs`, and run the `./000_all.sh` script
+again to see your changes.
+
+### Details of Installation
 
 We're ultimately going to be running on Amazon's Elastic Map Reduct (EMR),
 which supports Flink 1.12, so that's what we'll be installing.  Specifically,
