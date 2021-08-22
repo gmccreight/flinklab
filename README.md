@@ -63,3 +63,53 @@ cp -a flink-1.12.5 ~/
 ```
 
 From there, the code in the `dev.sh` file should work.
+
+### Installing Maven
+
+https://maven.apache.org/download.cgi
+
+apache-maven-3.8.2-bin.tar.gz
+
+After I unzipped it, I placed the folder in my home directory and updated my PATH.
+
+`mvn -v`
+
+```
+Apache Maven 3.8.2 (ea98e05a04480131370aa0c110b8c54cf726c06f)
+Maven home: /Users/gordonmccreight/apache-maven-3.8.2
+Java version: 1.8.0_301, vendor: Oracle Corporation, runtime: /Library/Java/JavaVirtualMachines/jdk1.8.0_301.jdk/Contents/Home/jre
+Default locale: en_US, platform encoding: UTF-8
+OS name: "mac os x", version: "10.15.7", arch: "x86_64", family: "mac"
+```
+
+### Creating a project
+
+At https://flink.apache.org/q/quickstart.sh, the code says the following, except I've substituted 1.12.5, since that's what we're using
+
+```
+PACKAGE=flinklabqs
+
+mvn archetype:generate								\
+  -DarchetypeGroupId=org.apache.flink				\
+  -DarchetypeArtifactId=flink-flinklabqs-java		\
+  -DarchetypeVersion=${1:-1.12.5}							\
+  -DgroupId=org.myorg.flinklabqs					\
+  -DartifactId=$PACKAGE								\
+  -Dversion=0.1										\
+  -Dpackage=org.myorg.flinklabqs					\
+  -DinteractiveMode=false
+
+#
+# Give some guidance
+#
+echo -e "\\n\\n"
+echo -e "\\tA sample flinklabqs Flink Job has been created."
+echo -e "\\tSwitch into the directory using"
+echo -e "\\t\\t cd $PACKAGE"
+echo -e "\\tImport the project there using your favorite IDE (Import it as a maven project)"
+echo -e "\\tBuild a jar inside the directory using"
+echo -e "\\t\\t mvn clean package"
+echo -e "\\tYou will find the runnable jar in $PACKAGE/target"
+echo -e "\\tConsult our website if you have any troubles: http://flink.apache.org/community.html#mailing-lists"
+echo -e "\\n\\n"
+```
