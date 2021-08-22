@@ -2,11 +2,14 @@
 
 set -e
 
-clear
-
 this_abs_path="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
 flink_dir=~/flink-1.12.5
+
+if ! [[ -d $flink_dir ]]; then
+  echo The directory $flink_dir does not exist on your system.  Did you do the installation right?
+  exit 1
+fi
 
 cd $flink_dir
 
