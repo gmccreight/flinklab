@@ -4,6 +4,6 @@ https://github.com/apache/flink/blob/master/flink-examples/flink-examples-batch/
 
 The paths have been changed.
 
-There is no WordCountData scala version, and I don't want to use the Java version, so I ported it to Scala by hand.
-
-This was a little challenging because there are no static members in Scala
+There is no WordCountData scala version, and I don't want to use the Java
+version, so I inlined the data, since I couldn't figure out how to use data
+from another file.

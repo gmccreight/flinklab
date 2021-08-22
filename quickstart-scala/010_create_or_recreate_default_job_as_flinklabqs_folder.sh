@@ -5,7 +5,7 @@ set -e
 # Start over by removing the folder, then running the code generation again.
 rm -rf flinklabqs
 
-# The following code is super similar to https://flink.apache.org/q/quickstart.sh
+# The following code is super similar to https://flink.apache.org/q/quickstart-scala.sh
 # ... but things have been renamed to flinklab and the quickstart
 # project has been renamed flinklabqs.
 
