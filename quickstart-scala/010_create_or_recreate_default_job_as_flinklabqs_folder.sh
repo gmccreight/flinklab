@@ -13,7 +13,7 @@ PACKAGE=flinklabqs
 
 mvn archetype:generate								\
   -DarchetypeGroupId=org.apache.flink				\
-  -DarchetypeArtifactId=flink-quickstart-java		\
+  -DarchetypeArtifactId=flink-quickstart-scala		\
   -DarchetypeVersion=${1:-1.12.5}							\
   -DgroupId=org.flinklab.flinklabqs					\
   -DartifactId=$PACKAGE								\
