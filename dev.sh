@@ -4,6 +4,6 @@ set -e
 
 clear
 
-cd quickstart
+cd quickstart-scala
 
 ./000_all.sh
