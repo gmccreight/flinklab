@@ -10,7 +10,6 @@ set -e
 rm -f flinklabqs/src/main/java/org/flinklab/flinklabqs/*
 
 # Copy the code from the folder to the destination
-# cp override_code_to_copy_into_flinklabqs/*.java flinklabqs/src/main/java/org/flinklab/flinklabqs
 cp override_code_to_copy_into_flinklabqs/WordCountData.java flinklabqs/src/main/java/org/flinklab/flinklabqs
 cp override_code_to_copy_into_flinklabqs/WordCount.scala flinklabqs/src/main/java/org/flinklab/flinklabqs
 
