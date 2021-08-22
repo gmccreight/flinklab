@@ -1,13 +1,14 @@
 ### Installation
 
-We're going to be running on Amazon's Elastic Map Reduct (EMR), which supports
-Flink 1.12, so that's what we'll be installing.  Specifically, we'll be installing
-Flink 1.12.5.
+We're ultimately going to be running on Amazon's Elastic Map Reduct (EMR),
+which supports Flink 1.12, so that's what we'll be installing.  Specifically,
+we'll be installing Flink 1.12.5.
 
-The following is taken from the local installation instructions for 1.12 here:
+The following is taken from the local installation instructions for 1.12 here...
+
 https://ci.apache.org/projects/flink/flink-docs-release-1.12/try-flink/local_installation.html
 
-and tweaked a bit based on issues I encountered along the way.
+... and tweaked a bit based on issues I encountered along the way.
 
 #### Installing Java
 
@@ -37,18 +38,18 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.301-b09, mixed mode)
 
 Ok, so as mentioned above, we need version 1.12, since it's supported by EMR.
 
-To be able to see that things are working well, we'll want to be able to run
-the examples, too.  This means that we should *not* use the homebrew version, since it
-does not come with the examples.  Rather, we should download 1.12.5 from here:
+We should download 1.12.5 from here:
 
 https://www.apache.org/dyn/closer.lua/flink/flink-1.12.5/flink-1.12.5-bin-scala_2.11.tgz
 
 Note how it has, or supports Scala 2.11.  I have no idea if that's important or not,
 but I do know that Scala is the preferred language for flink development.
 
-Also, note that the download has the example *.java* files, but not the source
+Also, note that the download has the example *.jar files, but not the source
 code.  The source code for the example in question, WordCount, is here:
 https://github.com/apache/flink/blob/release-1.12.5/flink-examples/flink-examples-streaming/src/main/java/org/apache/flink/streaming/examples/wordcount/WordCount.java
+
+That's ok, though.  See the Readme inside our quickstart folder for how we deal with that.
 
 Ok, once that's downloaded, you can
 
@@ -62,17 +63,17 @@ which will create a flink-1.12.5 folder.  I just cp'd that to my home folder.
 cp -a flink-1.12.5 ~/
 ```
 
-From there, the code in the `dev.sh` file should work.
-
 ### Installing Maven
 
-https://maven.apache.org/download.cgi
+You can get Maven at https://maven.apache.org/download.cgi
 
-apache-maven-3.8.2-bin.tar.gz
+The version I used is apache-maven-3.8.2-bin.tar.gz
 
-After I unzipped it, I placed the folder in my home directory and updated my PATH.
+After I unzipped it, I placed the folder in my home directory and updated my PATH and ran this...
 
 `mvn -v`
+
+... I got the following:
 
 ```
 Apache Maven 3.8.2 (ea98e05a04480131370aa0c110b8c54cf726c06f)
@@ -84,32 +85,6 @@ OS name: "mac os x", version: "10.15.7", arch: "x86_64", family: "mac"
 
 ### Creating a project
 
-At https://flink.apache.org/q/quickstart.sh, the code says the following, except I've substituted 1.12.5, since that's what we're using
+Check out out quickstart folder for how to actually create and run a project.
 
-```
-PACKAGE=flinklabqs
-
-mvn archetype:generate								\
-  -DarchetypeGroupId=org.apache.flink				\
-  -DarchetypeArtifactId=flink-flinklabqs-java		\
-  -DarchetypeVersion=${1:-1.12.5}							\
-  -DgroupId=org.myorg.flinklabqs					\
-  -DartifactId=$PACKAGE								\
-  -Dversion=0.1										\
-  -Dpackage=org.myorg.flinklabqs					\
-  -DinteractiveMode=false
-
-#
-# Give some guidance
-#
-echo -e "\\n\\n"
-echo -e "\\tA sample flinklabqs Flink Job has been created."
-echo -e "\\tSwitch into the directory using"
-echo -e "\\t\\t cd $PACKAGE"
-echo -e "\\tImport the project there using your favorite IDE (Import it as a maven project)"
-echo -e "\\tBuild a jar inside the directory using"
-echo -e "\\t\\t mvn clean package"
-echo -e "\\tYou will find the runnable jar in $PACKAGE/target"
-echo -e "\\tConsult our website if you have any troubles: http://flink.apache.org/community.html#mailing-lists"
-echo -e "\\n\\n"
-```
+It's all scripted, so it *should* be easy, assuming you did the exact same installation I did above.
