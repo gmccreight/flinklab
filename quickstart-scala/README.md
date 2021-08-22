@@ -8,8 +8,8 @@ machine, run the WordCountData job, and report some results.
 
 ### Assumptions
 
-You have Java 8, Flink, and Maven installed (see the main README) for
-instructions.  Be really careful following them!
+You have Java 8, Flink, and Maven installed (see the main README in the parent
+folder) for instructions.  Be really careful following them!
 
 Maybe we'll create a Docker version of this later, but the overhead of running
 Docker is also not ideal.  Anyhow, for now, this runs on your local machine.
