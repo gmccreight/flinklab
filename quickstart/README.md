@@ -2,8 +2,9 @@
 
 #### The Goal
 
-You should be able to cd into this directory, run `000_all.sh`, and it should compile
-and run the WordCountData job on Flink.
+You should be able to cd into this directory, run `000_all.sh`, and it should
+compile a WordCount jar.  Then it should start a Flink cluster on your local
+machine, run the WordCountData job, and report some results.
 
 ### Assumptions
 
@@ -46,5 +47,3 @@ to start and stop the local cluster.
 Having the steps be clearly labeled with ordering numbers (and having `000_all.sh`
 as an easy place to orchestrate the steps) is also very helpful for reasoning
 about things.
-
-
