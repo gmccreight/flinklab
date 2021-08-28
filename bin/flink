@@ -1,0 +1,12 @@
+#!/bin/bash
+
+case "$1" in
+    sh)
+        docker-compose run --rm console /bin/bash
+        ;;
+    package)
+        docker-compose run --rm console mvn package -f ${2#app/}/pom.xml
+        ;;
+    *)
+        docker-compose run --rm console flink $*
+esac

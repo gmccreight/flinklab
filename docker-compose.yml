@@ -1,0 +1,47 @@
+version: "3.9"
+   
+services:
+  jobmanager:
+    image: flink:1.12.5-scala_2.12-java11
+    command: "jobmanager.sh start-foreground"
+    ports:
+      - 8081:8081
+    volumes:
+      - ./conf:/opt/flink/conf
+      - /tmp/flink-checkpoints-directory:/tmp/flink-checkpoints-directory
+      - /tmp/flink-savepoints-directory:/tmp/flink-savepoints-directory
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+  taskmanager:
+    image: flink:1.12.5-scala_2.12-java11
+    depends_on:
+      - jobmanager
+    command: "taskmanager.sh start-foreground"
+    volumes:
+      - ./conf:/opt/flink/conf
+      - /tmp/flink-checkpoints-directory:/tmp/flink-checkpoints-directory
+      - /tmp/flink-savepoints-directory:/tmp/flink-savepoints-directory
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+  console:
+    build:
+      context: ./
+      dockerfile: Dockerfile-console
+    container_name: console
+    command: flink -v # Service is meant for ssh, so we don't want it to actually boot
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+    volumes:
+      - ./app:/app
+      - ./conf:/opt/flink/conf
+      - ./target:/app/target
+      - ./.m2:/opt/flink/.m2
+  kafka:
+    image: bashj79/kafka-kraft
+    container_name: kafka
+    restart: always
+    ports:
+      - 9092:9092
+    # environment:
+    #   - KAFKA_ADVERTISED_PORT=9092
+    #   - KAFKA_ADVERTISED_HOST_NAME=kafka

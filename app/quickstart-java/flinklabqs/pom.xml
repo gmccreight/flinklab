@@ -37,7 +37,19 @@ under the License.
 		<log4j.version>2.12.1</log4j.version>
 	</properties>
 
-	<repositories>
+  <profiles>
+    <profile>
+      <id>targetdir</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <directory>/app/target</directory>
+      </build>
+    </profile>
+  </profiles>
+
+  <repositories>
 		<repository>
 			<id>apache.snapshots</id>
 			<name>Apache Development Snapshot Repository</name>
