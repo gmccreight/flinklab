@@ -4,6 +4,6 @@ set -e
 
 clear
 
-cd quickstart-scala
+cd example-streaming-scala-unit-test
 
 ./000_all.sh
