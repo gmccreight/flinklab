@@ -4,6 +4,6 @@ set -e
 
 clear
 
-cd example-streaming-scala-unit-test
+cd app/example-streaming-scala-unit-test
 
 ./000_all.sh

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Move to project root
+cd $(dirname "$0")/..
+
+case "$1" in
+    sh)
+        docker-compose exec kafka /bin/bash
+        ;;
+    topics)
+        shift
+        docker-compose exec kafka kafka-topics.sh --bootstrap-server=kafka:9092 $*
+        ;;
+    producer)
+        shift
+        docker-compose exec kafka kafka-console-producer.sh --bootstrap-server=kafka:9092 $*
+        ;;
+    consumer)
+        shift
+        docker-compose exec kafka kafka-console-consumer.sh --bootstrap-server=kafka:9092 $*
+        ;;
+    configs)
+        shift
+        docker-compose exec kafka kafka-configs.sh --bootstrap-server=kafka:9092 $*
+        ;;
+esac
