@@ -37,6 +37,7 @@ under the License.
 		<log4j.version>2.12.1</log4j.version>
 	</properties>
 
+  <!-- Configure target directory -->
   <profiles>
     <profile>
       <id>targetdir</id>

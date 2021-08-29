@@ -45,10 +45,23 @@ under the License.
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<flink.version>1.12.5</flink.version>
-		<scala.binary.version>2.11</scala.binary.version>
-		<scala.version>2.11.12</scala.version>
+		<scala.binary.version>2.12</scala.binary.version>
+		<scala.version>2.12.8</scala.version>
 		<log4j.version>2.12.1</log4j.version>
 	</properties>
+
+  <!-- Configure target directory -->
+  <profiles>
+    <profile>
+      <id>targetdir</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <directory>/app/target</directory>
+      </build>
+    </profile>
+  </profiles>
 
 	<dependencies>
 		<!-- Apache Flink dependencies -->

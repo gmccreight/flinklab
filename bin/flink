@@ -7,6 +7,11 @@ case "$1" in
     package)
         docker-compose run --rm console mvn package -f ${2#app/}/pom.xml
         ;;
+    clean)
+        cd target
+        # Remove everything but .gitignore
+        ls  | grep -v .gitignore | xargs rm -r
+        ;;
     *)
         docker-compose run --rm console flink $*
 esac
