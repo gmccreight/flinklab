@@ -1,16 +1,23 @@
 #!/bin/bash
 
+set -e
+
+# Move to project root
+cd $(dirname "$0")/..
+
 case "$1" in
     sh)
         docker-compose run --rm console /bin/bash
         ;;
-    package)
-        docker-compose run --rm console mvn package -f ${2#app/}/pom.xml
-        ;;
-    clean)
-        cd target
-        # Remove everything but .gitignore
-        ls  | grep -v .gitignore | xargs rm -r
+    scala-sh)
+        case "$2" in
+            remote)
+                docker-compose run --rm console /opt/flink/bin/start-scala-shell.sh remote jobmanager 6123
+                ;;
+            *)
+                docker-compose run --rm console /opt/flink/bin/start-scala-shell.sh local
+                ;;
+        esac
         ;;
     *)
         docker-compose run --rm console flink $*

@@ -2,7 +2,8 @@ version: "3.9"
    
 services:
   jobmanager:
-    image: flink:1.12.5-scala_2.12-java11
+    # This is (roughly) the version of Flink supported by EMR
+    image: flink:1.12.5-scala_2.11-java11
     command: "jobmanager.sh start-foreground"
     ports:
       - 8081:8081
@@ -13,7 +14,7 @@ services:
     environment:
       - JOB_MANAGER_RPC_ADDRESS=jobmanager
   taskmanager:
-    image: flink:1.12.5-scala_2.12-java11
+    image: flink:1.12.5-scala_2.11-java11
     depends_on:
       - jobmanager
     command: "taskmanager.sh start-foreground"

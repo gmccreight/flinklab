@@ -11,7 +11,7 @@ rm -rf flinklabqs
 
 PACKAGE=flinklabqs
 
-mvn archetype:generate								\
+$(git rev-parse --show-toplevel)/bin/mvn archetype:generate								\
   -DarchetypeGroupId=org.apache.flink				\
   -DarchetypeArtifactId=flink-quickstart-scala		\
   -DarchetypeVersion=${1:-1.12.5}							\
@@ -20,3 +20,5 @@ mvn archetype:generate								\
   -Dversion=0.1										\
   -Dpackage=org.flinklab.flinklabqs					\
   -DinteractiveMode=false
+
+mv ../flinklabqs .

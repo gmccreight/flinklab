@@ -15,3 +15,8 @@ cp override_code_to_copy_into_flinklabqs/WordCount.scala flinklabqs/src/main/sca
 # Replace the StreamingJob with WordCount
 cat flinklabqs/pom.xml | sed -e 's/StreamingJob/WordCount/' > flinklabqs/pom_replacement.xml
 mv flinklabqs/pom_replacement.xml flinklabqs/pom.xml
+
+# Add the target profile to pom.xml
+docker-compose run --rm console /bin/bash -c 'cd quickstart-scala ; xmlstarlet ed -N x="http://maven.apache.org/POM/4.0.0" -s "/x:project" -t elem -n "profiles" -v "$(<override_code_to_copy_into_flinklabqs/target-profile.xml)" flinklabqs/pom.xml | xmlstarlet unesc | xmlstarlet fo > flinklabqs/pom_replacement.xml'
+
+mv flinklabqs/pom_replacement.xml flinklabqs/pom.xml

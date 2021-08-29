@@ -1,8 +1,12 @@
 FROM maven:3.8-jdk-11
 
-# Copied from https://github.com/apache/flink-docker/tree/master/1.12/scala_2.12-java11-debian
+# Copied from https://github.com/apache/flink-docker/blob/46ad7729983875edeb753792590fa1b3ef3f7af2/1.12/scala_2.11-java11-debian
 # but uses the maven image so that we get maven.
 # Yes, this was easier than installing maven on the flink image
+
+RUN set -ex; \
+  apt-get update; \
+  apt-get -y install xmlstarlet;
 
 #############
 # Start copy
@@ -34,8 +38,8 @@ RUN set -ex; \
   gosu nobody true
 
 # Configure Flink version
-ENV FLINK_TGZ_URL=https://www.apache.org/dyn/closer.cgi?action=download&filename=flink/flink-1.12.5/flink-1.12.5-bin-scala_2.12.tgz \
-    FLINK_ASC_URL=https://www.apache.org/dist/flink/flink-1.12.5/flink-1.12.5-bin-scala_2.12.tgz.asc \
+ENV FLINK_TGZ_URL=https://www.apache.org/dyn/closer.cgi?action=download&filename=flink/flink-1.12.5/flink-1.12.5-bin-scala_2.11.tgz \
+    FLINK_ASC_URL=https://www.apache.org/dist/flink/flink-1.12.5/flink-1.12.5-bin-scala_2.11.tgz.asc \
     GPG_KEY=9545FBA24D2225795DBAAF8EFBB83C0A4FFB9CA8 \
     CHECK_GPG=true
 
@@ -75,7 +79,6 @@ COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 EXPOSE 6123 8081
 CMD ["help"]
-
 
 #############
 # End copy
