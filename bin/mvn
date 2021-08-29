@@ -12,6 +12,9 @@ case "$1" in
     package)
         docker-compose run --rm console mvn package -f ${2#app/}/pom.xml
         ;;
+    test)
+        docker-compose run --rm console mvn test -f ${2#app/}/pom.xml
+        ;;
     clean)
         cd target
         # Remove everything but .gitignore

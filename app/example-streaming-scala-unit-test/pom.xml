@@ -57,6 +57,11 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                  <args>
+                    <arg>-nobootcp</arg>
+                  </args>
+                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -19,11 +19,7 @@ a separate example.  We want to keep this example as simple as possible.
 
 ### Assumptions
 
-You have Java 8, Flink, and Maven installed (see the main README) for
-instructions.  Be really careful following them!
-
-We should have Docker support soon, too, after which we will remove the need
-for the setup.
+You have docker-compose installed and docker running.
 
 ### References
 
