@@ -1,0 +1,10 @@
+<!-- This sets the target to point to /app/target` -->
+<profile>
+  <id>targetdir</id>
+  <activation>
+    <activeByDefault>true</activeByDefault>
+  </activation>
+  <build>
+    <directory>/app/target</directory>
+  </build>
+</profile>

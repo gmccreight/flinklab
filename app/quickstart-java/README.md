@@ -8,11 +8,7 @@ machine, run the WordCountData job, and report some results.
 
 ### Assumptions
 
-You have Java 8, Flink, and Maven installed (see the main README) for
-instructions.  Be really careful following them!
-
-Maybe we'll create a Docker version of this later, but the overhead of running
-Docker is also not ideal.  Anyhow, for now, this runs on your local machine.
+You have docker-compose installed and docker running.
 
 ### Details and Motivation
 
@@ -40,9 +36,6 @@ hard-to-reason-about modifications to the code in that folder, after-the-fact,
 I'm layering in changes as part of a small build process.
 
 You can see that in the `015_make_changes_to_default_job.sh` script.
-
-In the `030_run_jar_in_flink.sh` script, I try to save you the tedium of needing
-to start and stop the local cluster.
 
 Having the steps be clearly labeled with ordering numbers (and having `000_all.sh`
 as an easy place to orchestrate the steps) is also very helpful for reasoning

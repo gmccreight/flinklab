@@ -8,7 +8,7 @@ machine, run the WordCountData job, and report some results.
 
 ### Assumptions
 
-You have docker-compose installed.
+You have docker-compose installed and docker running.
 
 ### Details and Motivation
 
