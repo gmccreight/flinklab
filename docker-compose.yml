@@ -36,7 +36,7 @@ services:
       - ./app:/app
       - ./conf:/opt/flink/conf
       - ./target:/app/target
-      - ./.m2:/opt/flink/.m2
+      - ./.m2:/root/.m2
   kafka:
     image: bashj79/kafka-kraft
     container_name: kafka
