@@ -1,4 +1,4 @@
-package org.flinklab.flinklabqs;
+package org.flinklab.sic;
 
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.state.*;
@@ -13,7 +13,7 @@ import org.apache.flink.util.Collector;
 
 import java.io.IOException;
 
-public class StreamingJoin {
+public class Demo {
 
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
@@ -57,7 +57,7 @@ public class StreamingJoin {
 
         total.writeAsText("/tmp/total", org.apache.flink.core.fs.FileSystem.WriteMode.OVERWRITE).setParallelism(1);
 
-        env.execute("Streaming Join Java Example");
+        env.execute("Internal Consistency Demo");
     }
 
     static final class ProcessTransaction extends KeyedProcessFunction<Long, Tuple3<Long, Long, Double>, Tuple3<Long, Long, Double>> {

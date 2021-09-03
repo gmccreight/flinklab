@@ -1,4 +1,4 @@
-package org.flinklab.flinklabqs;
+package org.flinklab.sic;
 
 import org.apache.flink.api.common.serialization.DeserializationSchema;
 import org.apache.flink.api.common.typeinfo.TypeInformation;

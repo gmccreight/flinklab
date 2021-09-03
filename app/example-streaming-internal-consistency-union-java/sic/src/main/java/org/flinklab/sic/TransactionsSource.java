@@ -1,4 +1,4 @@
-package org.flinklab.flinklabqs;
+package org.flinklab.sic;
 
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.JsonNode;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.ObjectMapper;
