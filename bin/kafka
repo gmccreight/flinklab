@@ -9,18 +9,18 @@ case "$1" in
         ;;
     topics)
         shift
-        docker-compose exec kafka kafka-topics.sh --bootstrap-server=kafka:9092 $*
+        docker-compose exec kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server=kafka:9092 $*
         ;;
     producer)
         shift
-        docker-compose exec kafka kafka-console-producer.sh --bootstrap-server=kafka:9092 $*
+        docker-compose exec kafka /opt/kafka/bin/kafka-console-producer.sh --bootstrap-server=kafka:9092 $*
         ;;
     consumer)
         shift
-        docker-compose exec kafka kafka-console-consumer.sh --bootstrap-server=kafka:9092 $*
+        docker-compose exec kafka /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server=kafka:9092 $*
         ;;
     configs)
         shift
-        docker-compose exec kafka kafka-configs.sh --bootstrap-server=kafka:9092 $*
+        docker-compose exec kafka /opt/kafka/bin/kafka-configs.sh --bootstrap-server=kafka:9092 $*
         ;;
 esac

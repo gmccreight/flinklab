@@ -37,12 +37,20 @@ services:
       - ./conf:/opt/flink/conf
       - ./target:/app/target
       - ./.m2:/root/.m2
+
+  zookeeper:
+    image: zookeeper
+    container_name: zookeeper
+    restart: always
   kafka:
-    image: bashj79/kafka-kraft
+    image: wurstmeister/kafka
     container_name: kafka
+    depends_on:
+      - zookeeper
     restart: always
     ports:
       - 9092:9092
-    # environment:
-    #   - KAFKA_ADVERTISED_PORT=9092
-    #   - KAFKA_ADVERTISED_HOST_NAME=kafka
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_ADVERTISED_PORT=9092
+      - KAFKA_ADVERTISED_HOST_NAME=kafka
