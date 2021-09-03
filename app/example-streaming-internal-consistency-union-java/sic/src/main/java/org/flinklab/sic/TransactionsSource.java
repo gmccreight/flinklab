@@ -9,8 +9,6 @@ import java.io.*;
 import java.sql.Timestamp;
 import java.util.Arrays;
 
-import static java.lang.System.out;
-
 public class TransactionsSource implements SourceFunction<JsonNode> {
 
     private final String dataFilePath;

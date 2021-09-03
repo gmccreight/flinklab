@@ -57,7 +57,7 @@ public class Demo {
 
         total.writeAsText("/tmp/total", org.apache.flink.core.fs.FileSystem.WriteMode.OVERWRITE).setParallelism(1);
 
-        env.execute("Internal Consistency Demo");
+        env.execute("Internal Consistency Demo - Java");
     }
 
     static final class ProcessTransaction extends KeyedProcessFunction<Long, Tuple3<Long, Long, Double>, Tuple3<Long, Long, Double>> {
