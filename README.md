@@ -7,31 +7,30 @@ a cluster on your local machine and print the result to stdout. Within that `qui
 
 ## Usage
 
-Use `./bin/mvn` and `./bin/flink` to interact with a program.
+Use the following commands to interact with a program. These commands must be run from within this project, and they respect the current directory.
 
 Commands:
-- `./bin/mvn package <application>`: Run `mvn package <application>/pom.xml`, compiling the program into `./target`
-- `./bin/mvn clean`: Clean `./target`
-- `./bin/mvn *`: Run any other `mvn` command
+- `./bin/mvn *`: Run any `mvn` command
 - `./bin/flink *`: Run any [`flink` command](https://ci.apache.org/projects/flink/flink-docs-master/docs/deployment/cli/) 
 - `./bin/flink sh`: Access a bash console
 - `./bin/flink scala [remote]`: Access a Flink Scala console (local or remote, which requires `jobmanager` to be started)
 
 Preparing the docker containers:
 ```
-docker-compose build
+$ docker-compose build
 ```
 
 Starting the cluster:
 ```
-docker-compose up -d
+$ docker-compose up -d
 ```
 
 Compiling and running a program:
 
 ```
-./bin/mvn package app/quickstart-java/flinklabqs
-./bin/flink run target/flinklabqs-0.1.jar
+$ cd app/quickstart-scala/flinklabqs
+$ ./bin/mvn package
+$ ./bin/flink run target/flinklabqs-0.1.jar
 ```
 
 Flink UI is hosted at http://localhost:8081 when `jobmanager` is running.

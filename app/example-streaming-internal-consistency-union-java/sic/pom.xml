@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
@@ -17,7 +16,9 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.flinklab.sic</groupId>
   <artifactId>sic</artifactId>
@@ -70,12 +71,12 @@ under the License.
     <!-- Add connector dependencies here. They must be in the default scope (compile). -->
     <!-- Example:
 
-		<dependency>
-			<groupId>org.apache.flink</groupId>
-			<artifactId>flink-connector-kafka_${scala.binary.version}</artifactId>
-			<version>${flink.version}</version>
-		</dependency>
-		-->
+<dependency>
+<groupId>org.apache.flink</groupId>
+<artifactId>flink-connector-kafka_${scala.binary.version}</artifactId>
+<version>${flink.version}</version>
+</dependency>
+    -->
     <!-- Add logging framework, to produce console output when running in the IDE. -->
     <!-- These dependencies are excluded from the application JAR by default. -->
     <dependency>
@@ -134,7 +135,7 @@ under the License.
               <filters>
                 <filter>
                   <!-- Do not copy the signatures in the META-INF folder.
-									Otherwise, this might cause SecurityExceptions when using the JAR. -->
+                       Otherwise, this might cause SecurityExceptions when using the JAR. -->
                   <artifact>*:*</artifact>
                   <excludes>
                     <exclude>META-INF/*.SF</exclude>
@@ -197,16 +198,4 @@ under the License.
       </plugins>
     </pluginManagement>
   </build>
-  <profiles>
-    <!-- This sets the target to point to /app/target` -->
-    <profile>
-      <id>targetdir</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <build>
-        <directory>/app/target</directory>
-      </build>
-    </profile>
-  </profiles>
 </project>

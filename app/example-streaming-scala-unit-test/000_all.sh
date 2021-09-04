@@ -2,4 +2,7 @@
 
 set -e
 
-$(git rev-parse --show-toplevel)/bin/mvn test app/example-streaming-scala-unit-test
+# Ensure you are in this directory
+cd $(dirname "$0")
+
+$(git rev-parse --show-toplevel)/bin/mvn test

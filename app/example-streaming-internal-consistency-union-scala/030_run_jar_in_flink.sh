@@ -4,5 +4,8 @@ set -e
 
 docker-compose up -d jobmanager taskmanager
 
+# Ensure you are in this directory
+cd $(dirname "$0")
+
 echo "Running program"
-$(git rev-parse --show-toplevel)/bin/flink run target/sic-0.1.jar
+$(git rev-parse --show-toplevel)/bin/flink run sic/target/sic-0.1.jar

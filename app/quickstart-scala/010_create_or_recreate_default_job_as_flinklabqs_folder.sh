@@ -2,6 +2,9 @@
 
 set -e
 
+# Ensure you are in this directory
+cd $(dirname "$0")
+
 # Start over by removing the folder, then running the code generation again.
 rm -rf flinklabqs
 
@@ -20,5 +23,3 @@ $(git rev-parse --show-toplevel)/bin/mvn archetype:generate								\
   -Dversion=0.1										\
   -Dpackage=org.flinklab.flinklabqs					\
   -DinteractiveMode=false
-
-mv ../flinklabqs .
