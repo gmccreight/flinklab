@@ -6,8 +6,8 @@ ROOT_DIR=$(cd $(dirname "$0")/..; pwd -P)
 CURRENT_DIR=$(pwd -P)
 
 if [[ ${CURRENT_DIR##$ROOT_DIR} != "$CURRENT_DIR" ]]
-   then
-       WORKING_DIR=/${CURRENT_DIR##$ROOT_DIR}
+then
+    WORKING_DIR=/${CURRENT_DIR##$ROOT_DIR}
 else
     echo "Must be run from within the project dir"
     exit 1
@@ -16,6 +16,15 @@ fi
 case "$1" in
     sh)
         docker-compose run --rm console /bin/bash
+        ;;
+    clear-cache)
+        cd $(dirname "$0")/../.cache
+        # Remove everything but .gitignore
+        ls  | grep -v .gitignore | xargs rm -r
+
+        cd ../.sbt
+        # Remove everything but .gitignore
+        ls  | grep -v .gitignore | xargs rm -r
         ;;
     *)
         docker-compose run -w /${WORKING_DIR} --rm console sbt $*

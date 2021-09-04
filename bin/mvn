@@ -17,6 +17,11 @@ case "$1" in
     sh)
         docker-compose run -w $WORKING_DIR --rm console /bin/bash
         ;;
+    clear-cache)
+        cd $(dirname "$0")/../.m2
+        # Remove everything but .gitignore
+        ls  | grep -v .gitignore #| xargs rm -r
+        ;;
     *)
         docker-compose run -w $WORKING_DIR --rm console mvn $*
 esac

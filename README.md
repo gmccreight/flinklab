@@ -36,6 +36,8 @@ $ ./bin/flink run target/flinklabqs-0.1.jar
 
 Flink UI is hosted at http://localhost:8081 when `jobmanager` is running.
 
+### Clearing the cache
+There are three cache directories, which get mounted to the `console` service, that are used to house the Maven and sbt caches: `.m2`, `.sbt`, and `.cache`. You can use the `./bin/mvn clear-cache` and `./bin/sbt clear-cache` commands to clear these caches.
 
 ### Interacting with Kafka
 ```
