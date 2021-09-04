@@ -11,6 +11,7 @@ Use the following commands to interact with a program. These commands must be ru
 
 Commands:
 - `./bin/mvn *`: Run any `mvn` command
+- `./bin/sbt *`: Run any `stb` command
 - `./bin/flink *`: Run any [`flink` command](https://ci.apache.org/projects/flink/flink-docs-master/docs/deployment/cli/) 
 - `./bin/flink sh`: Access a bash console
 - `./bin/flink scala [remote]`: Access a Flink Scala console (local or remote, which requires `jobmanager` to be started)

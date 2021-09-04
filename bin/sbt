@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e
+
+ROOT_DIR=$(cd $(dirname "$0")/..; pwd -P)
+CURRENT_DIR=$(pwd -P)
+
+if [[ ${CURRENT_DIR##$ROOT_DIR} != "$CURRENT_DIR" ]]
+   then
+       WORKING_DIR=/${CURRENT_DIR##$ROOT_DIR}
+else
+    echo "Must be run from within the project dir"
+    exit 1
+fi
+
+case "$1" in
+    sh)
+        docker-compose run --rm console /bin/bash
+        ;;
+    *)
+        docker-compose run -w /${WORKING_DIR} --rm console sbt $*
+esac

@@ -3,9 +3,23 @@ FROM maven:3.8-jdk-11
 COPY --from=0 /opt/flink /opt/flink
 ENV PATH=/opt/flink/bin:$PATH
 
-RUN set -ex; \
-  apt-get update; \
-  apt-get -y install xmlstarlet; \
-  rm -rf /var/lib/apt/lists/*
+ARG SBT_VERSION=1.5.5
+
+# Install sbt
+RUN  mkdir /working/ && \
+  cd /working/ && \
+  curl -L -o sbt-$SBT_VERSION.deb https://repo.scala-sbt.org/scalasbt/debian/sbt-$SBT_VERSION.deb && \
+  dpkg -i sbt-$SBT_VERSION.deb && \
+  rm sbt-$SBT_VERSION.deb && \
+  apt-get update && \
+  apt-get install sbt
+
+# Force sbt to actually install
+RUN cd /working/ && sbt sbtVersion || true
+
+# Clean up
+RUN rm -rf /var/lib/apt/lists/* &&\
+  cd && \
+  rm -r /working/
 
 WORKDIR /app

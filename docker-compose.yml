@@ -38,6 +38,8 @@ services:
       - ./app:/app
       - ./conf:/opt/flink/conf
       - ./.m2:/root/.m2
+      - ./.sbt:/root/.sbt
+      - ./.cache:/root/.cache
 
   zookeeper:
     image: zookeeper
