@@ -1,3 +1,8 @@
 .DS_Store
 target/
 dependency-reduced-pom.xml
+
+# Ignore the stuff created by https://scalameta.org/metals/
+.bloop/
+.metals/
+metals.sbt
