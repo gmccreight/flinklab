@@ -34,5 +34,7 @@ heartbeat.timeout: 5000
 rest.flamegraph.enabled: true
 web.backpressure.refresh-interval: 10000
 
-# Needed to use ~/.aws/credentials
-fs.s3a.aws.credentials.provider: com.amazonaws.auth.profile.ProfileCredentialsProvider
+s3.endpoint: http://minio:9000
+s3.path.style.access: true
+s3.access-key: minioadmin
+s3.secret-key: minioadmin

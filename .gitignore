@@ -1,6 +1,10 @@
 .DS_Store
 target/
 dependency-reduced-pom.xml
+.mc/share
+.mc/certs
+.mc/session
+.minio-data/
 
 # Ignore the stuff created by https://scalameta.org/metals/
 .bloop/

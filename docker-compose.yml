@@ -10,22 +10,33 @@ services:
     restart: always
     volumes:
       - ./conf:/opt/flink/conf
+      - ./conf.local:/opt/flink/conf.local
       - /tmp/flink-checkpoints-directory:/tmp/flink-checkpoints-directory
       - /tmp/flink-savepoints-directory:/tmp/flink-savepoints-directory
+      - ~/.aws:/opt/flink/.aws
     environment:
-      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+      JOB_MANAGER_RPC_ADDRESS: jobmanager
+      ENABLE_BUILT_IN_PLUGINS: flink-s3-fs-hadoop-1.12.5.jar
+      FLINK_CONF_DIR: ${FLINK_CONF_DIR:-/opt/flink/conf.local}
   taskmanager:
     image: flink:1.12.5-scala_2.11-java11
     depends_on:
       - jobmanager
     command: "taskmanager.sh start-foreground"
     restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
     volumes:
       - ./conf:/opt/flink/conf
+      - ./conf.local:/opt/flink/conf.local
       - /tmp/flink-checkpoints-directory:/tmp/flink-checkpoints-directory
       - /tmp/flink-savepoints-directory:/tmp/flink-savepoints-directory
+      - ~/.aws:/opt/flink/.aws
     environment:
-      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+      JOB_MANAGER_RPC_ADDRESS: jobmanager
+      ENABLE_BUILT_IN_PLUGINS: flink-s3-fs-hadoop-1.12.5.jar
+      FLINK_CONF_DIR: ${FLINK_CONF_DIR:-/opt/flink/conf.local}
   console:
     build:
       context: ./
@@ -33,11 +44,15 @@ services:
     container_name: console
     command: flink -v # Service is meant for ssh, so we don't want it to actually boot
     environment:
-      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+      JOB_MANAGER_RPC_ADDRESS: jobmanager
+      S3_BUCKET: ${S3_BUCKET:-data}
     volumes:
       - ./app:/app
+      - ./data:/data
       - ./conf:/opt/flink/conf
+      - ./conf.local:/opt/flink/conf.local
       - ./.m2:/root/.m2
+      - ./.mc:/root/.mc
       - ./.sbt:/root/.sbt
       - ./.cache:/root/.cache
 
@@ -57,3 +72,14 @@ services:
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
       - KAFKA_ADVERTISED_PORT=9092
       - KAFKA_ADVERTISED_HOST_NAME=kafka
+
+  # Local S3
+  minio:
+    image: minio/minio
+    command: server /data --console-address ":9001"
+    restart: always
+    ports:
+      - 9000:9000
+      - 9001:9001
+    volumes:
+      - ./.minio-data:/data

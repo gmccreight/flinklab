@@ -1,6 +1,8 @@
 FROM flink:1.12.5-scala_2.11-java11
+FROM minio/mc
 FROM maven:3.8-jdk-11
 COPY --from=0 /opt/flink /opt/flink
+COPY --from=1 /usr/bin/mc /usr/bin/mc
 ENV PATH=/opt/flink/bin:$PATH
 
 ARG SBT_VERSION=1.5.5

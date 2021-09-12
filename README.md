@@ -61,6 +61,15 @@ $ ./bin/kafka producer --topic Topic1
 $ ./bin/kafka topics --delete --topic Topic1
 ```
 
+### Interacting with MinIO
+[MinIO](https://min.io/) is a S3-compatible file server that is included in this docker compose environment.
+
+MinIO provides a command-line app, `mc`, through which you can interact with not just MinIO, but local files and any other S3-compatible file servers (like S3, and GCS). You can use the `./bin/mc` command, but installing it locally (e.g. `brew install minio/stable/minio`) may be more convenient. When installing locally, be sure configure it correctly (e.g. `cp flinklab/.mc/config.json ~/.mc/config.json`).
+
+When running, you can go to its web UI http://localhost:9001/ to view files and interact with the server.
+
+The local MinIO files are stored in `.minio-data` and it has been initialized with one bucket: `data`. This bucket was created to line up with the `flinklab/data` directory, and files from the latter can be synced to the bucket using the `./bin/mc sync` command (not a standard mc command).
+
 ## Creating a project
 
 Check out one of the quickstart folders for how to actually create and run a project.
