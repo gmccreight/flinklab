@@ -10,6 +10,8 @@ import org.apache.flink.streaming.api.functions.co.KeyedBroadcastProcessFunction
 import org.apache.flink.streaming.api.scala.{DataStream, KeyedStream, StreamExecutionEnvironment}
 import org.apache.flink.util.Collector
 
+// TODO: we should be able to remove this, actually, since we're using alerts.writeAsText
+// which doesn't require all this stuff:
 // For the filesystem output of the alerts sink
 import org.apache.flink.api.common.serialization.SimpleStringEncoder
 import org.apache.flink.core.fs.Path
