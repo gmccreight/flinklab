@@ -37,13 +37,13 @@ object BroadcastExample {
       .fromCollection(keyedInput)
       .rebalance
       .map(value => value)
-      .setParallelism(1)
+      .setParallelism(4)
       .keyBy(value => value._1)
 
     val broadcastStream = env
       .fromCollection(input)
       .flatMap((value: Int, out: Collector[Int]) => out.collect(value))
-      .setParallelism(1)
+      .setParallelism(4)
       .broadcast(mapStateDescriptor)
 
     val output = elementStream
@@ -98,7 +98,8 @@ object BroadcastExample {
         }
       })
 
-    output.writeAsText("/tmp/eb_output", org.apache.flink.core.fs.FileSystem.WriteMode.OVERWRITE)
+    // output.writeAsText("/tmp/eb_output", org.apache.flink.core.fs.FileSystem.WriteMode.OVERWRITE)
+    output.print
     env.execute
   }
 }
