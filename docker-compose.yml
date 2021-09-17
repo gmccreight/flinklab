@@ -26,7 +26,7 @@ services:
     restart: always
     deploy:
       mode: replicated
-      replicas: 1
+      replicas: 2
     volumes:
       - ./conf:/opt/flink/conf
       - ./conf.local:/opt/flink/conf.local

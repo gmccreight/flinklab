@@ -8,25 +8,41 @@ import org.apache.flink.streaming.api.functions.co.KeyedBroadcastProcessFunction
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.util.Collector
 
-/**
-  * Example illustrating the use of [[org.apache.flink.api.common.state.BroadcastState]].
-  */
 object BroadcastExample {
 
   def main(args: Array[String]): Unit = {
 
-    val input = List(1, 2, 3, 4)
-
     val keyedInput = List[(Int, Int)](
-      new Tuple2[Int, Int](1, 1),
-      new Tuple2[Int, Int](1, 5),
-      new Tuple2[Int, Int](2, 2),
-      new Tuple2[Int, Int](2, 6),
-      new Tuple2[Int, Int](3, 3),
-      new Tuple2[Int, Int](3, 7),
-      new Tuple2[Int, Int](4, 4),
-      new Tuple2[Int, Int](4, 8)
+
+    // keyed by the ._1 element, which is this one
+    // |
+      (1, 1),
+      (1, 5),
+
+      (2, 2),
+      (2, 6),
+
+      (3, 3),
+      (3, 7),
+
+      (4, 4),
+      (4, 8)
     )
+
+    // These broadcastInput numbers are different from the keyedInput numbers
+    // so their relationship to the keyedInput numbers is confusing.
+    // They are, basically, not related in any way.
+    // You could imagine that in a real application, you might want them to
+    // be related (like you'd like to *use* the broadcast mapping in some way
+    // to affect the processed element), but that's not the case here, so don't be
+    // led astray!
+    //
+    // In the processBroadcastElement each of these numbers is turned into a
+    // map when the state is "put" (saved).  That map looks like this:
+    // 70 -> 700
+    // 80 -> 800
+    // etc
+    val broadcastInput = List(70, 80, 90)
 
     val env = StreamExecutionEnvironment.getExecutionEnvironment
 
@@ -37,20 +53,20 @@ object BroadcastExample {
       .fromCollection(keyedInput)
       .rebalance
       .map(value => value)
-      .setParallelism(1)
+      .setParallelism(2)
       .keyBy(value => value._1)
 
     val broadcastStream = env
-      .fromCollection(input)
+      .fromCollection(broadcastInput)
       .flatMap((value: Int, out: Collector[Int]) => out.collect(value))
-      .setParallelism(1)
+      .setParallelism(2)
       .broadcast(mapStateDescriptor)
 
     val output = elementStream
       .connect(broadcastStream)
       .process(new KeyedBroadcastProcessFunction[Int, (Int, Int), Int, String]() {
 
-        private lazy val valueState = new ValueStateDescriptor[String](
+        private lazy val valueStateDesc = new ValueStateDescriptor[String](
           "any", BasicTypeInfo.STRING_TYPE_INFO)
 
         private lazy val mapStateDesc = new MapStateDescriptor[String, Integer](
@@ -63,13 +79,13 @@ object BroadcastExample {
             out: Collector[String])
           : Unit = {
 
-          ctx.getBroadcastState(mapStateDesc).put(value + "", value)
+          // Turns 70 into a mapping 70 -> 700
+          ctx.getBroadcastState(mapStateDesc).put((value) + "", value * 10)
 
-          ctx.applyToKeyedState(valueState, new KeyedStateFunction[Int, ValueState[String]] {
-
+          ctx.applyToKeyedState(valueStateDesc, new KeyedStateFunction[Int, ValueState[String]] {
             override def process(key: Int, state: ValueState[String]): Unit =
-              out.collect("Broadcast side task#" +
-                getRuntimeContext.getIndexOfThisSubtask + ": " + key + " " + state.value)
+              out.collect("Broadcast taskIndex:" +
+                getRuntimeContext.getIndexOfThisSubtask + ", key:" + key + ", state.value:" + state.value)
           })
         }
 
@@ -80,7 +96,7 @@ object BroadcastExample {
             out: Collector[String])
           : Unit = {
 
-          val prev = getRuntimeContext.getState(valueState).value
+          val prev = getRuntimeContext.getState(valueStateDesc).value
 
           val str = new StringBuilder
           str.append("Value=").append(value).append(" Broadcast State=[")
@@ -91,7 +107,7 @@ object BroadcastExample {
           }
           str.append("]")
 
-          getRuntimeContext.getState(valueState).update(str.toString)
+          getRuntimeContext.getState(valueStateDesc).update(str.toString)
 
           out.collect("BEFORE: " + prev + " " + "AFTER: " + str)
 
