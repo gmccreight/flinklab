@@ -49,6 +49,12 @@ object S3ToS3 {
       1000 // Polling interval (ms)
     )
 
+    val config: OutputFileConfig = OutputFileConfig
+      .builder()
+      .withPartPrefix("part")
+      .withPartSuffix(".csv")
+      .build()
+
     val s3Sink = StreamingFileSink.forRowFormat(new Path( s"s3://${bucket}/${key_out}"), new SimpleStringEncoder[String]())
       .withRollingPolicy(
         DefaultRollingPolicy.builder()
@@ -59,6 +65,7 @@ object S3ToS3 {
             // actually causes part files to be finalized
             .withMaxPartSize(1024) // 1k - tag_scaling
             .build())
+      .withOutputFileConfig(config)
       .build()
 
     rows.addSink(s3Sink)
