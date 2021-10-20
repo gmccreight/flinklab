@@ -9,9 +9,22 @@ set a parallelism of 2 in the Flink job.
 
 We run it using ./000_all.sh
 
+### Fixing
+
+    // added this line
+    val emptyPartitionerToCauseRoundRobin: Optional[FlinkKafkaPartitioner[String]] = Optional.empty()
+
+    val kafkaProducer = new FlinkKafkaProducer[String](
+      "flink-to-kafka-fanout",
+      schema,
+      producerProps,
+      emptyPartitionerToCauseRoundRobin // Then used it here
+    )
+
+
 ### Results
 
-The CHECK does *not* work.  Rather, it gets stuck when checking partition 2 (the
+Before the fix the CHECK did not work.  Rather, it got stuck when checking partition 2 (the
 third partition), which is one greater than Flink's parallelism.
 
     CHECK: should distribute to all topic partitions

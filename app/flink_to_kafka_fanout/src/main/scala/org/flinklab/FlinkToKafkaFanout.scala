@@ -7,7 +7,9 @@ import org.apache.flink.streaming.api.functions.source.RichParallelSourceFunctio
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema
+import org.apache.flink.streaming.connectors.kafka.partitioner.FlinkKafkaPartitioner
 
+import java.util.Optional
 import java.util.Properties
 
 class StringRecordEmitterSource extends RichParallelSourceFunction[String] {
@@ -42,10 +44,12 @@ object FlinkToKafkaFanout {
     producerProps.setProperty("bootstrap.servers", "kafka:9092")
 
     val schema = new SimpleStringSchema
+    val emptyPartitionerToCauseRoundRobin: Optional[FlinkKafkaPartitioner[String]] = Optional.empty()
     val kafkaProducer = new FlinkKafkaProducer[String](
       "flink-to-kafka-fanout",
       schema,
-      producerProps
+      producerProps,
+      emptyPartitionerToCauseRoundRobin
     )
 
     dataStream
