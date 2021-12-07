@@ -3,7 +3,7 @@ version: "3.9"
 services:
   jobmanager:
     # This is (roughly) the version of Flink supported by EMR
-    image: flink:1.12.5-scala_2.11-java11
+    image: flink:1.13.1-scala_2.12-java11
     command: "jobmanager.sh start-foreground"
     ports:
       - 8081:8081
@@ -16,10 +16,10 @@ services:
       - ~/.aws:/opt/flink/.aws
     environment:
       JOB_MANAGER_RPC_ADDRESS: jobmanager
-      ENABLE_BUILT_IN_PLUGINS: flink-s3-fs-hadoop-1.12.5.jar
+      ENABLE_BUILT_IN_PLUGINS: flink-s3-fs-hadoop-1.13.1.jar
       FLINK_CONF_DIR: ${FLINK_CONF_DIR:-/opt/flink/conf.local}
   taskmanager:
-    image: flink:1.12.5-scala_2.11-java11
+    image: flink:1.13.1-scala_2.12-java11
     depends_on:
       - jobmanager
     command: "taskmanager.sh start-foreground"
@@ -35,7 +35,7 @@ services:
       - ~/.aws:/opt/flink/.aws
     environment:
       JOB_MANAGER_RPC_ADDRESS: jobmanager
-      ENABLE_BUILT_IN_PLUGINS: flink-s3-fs-hadoop-1.12.5.jar
+      ENABLE_BUILT_IN_PLUGINS: flink-s3-fs-hadoop-1.13.1.jar
       FLINK_CONF_DIR: ${FLINK_CONF_DIR:-/opt/flink/conf.local}
   console:
     build:
