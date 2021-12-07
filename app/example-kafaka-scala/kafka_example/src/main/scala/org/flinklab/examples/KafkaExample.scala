@@ -8,6 +8,9 @@ import org.apache.flink.api.scala._
 import org.apache.flink.streaming.connectors.kafka.{FlinkKafkaConsumer, FlinkKafkaProducer}
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema
 
+case class SomethingElse(i: Int)
+case class MyString(s: String, m: Map[String, SomethingElse])
+
 /**
   * Implements a basic Kafka consumer/producer
   * Adapted from: https://github.com/radicalbit/rbd-examples/blob/master/flink/kafka-connector-example/src/main/scala/io/radicalbit/flink/examples/KafkaConnectorExample.scala#L21
@@ -33,6 +36,8 @@ object KafkaExample {
 
     // make parameters available in the web interface
     env.getConfig.setGlobalJobParameters(params)
+    env.getConfig.disableGenericTypes
+    env.disableOperatorChaining
 
     // Translate input parameters into Kafka-friendly properties
     val (consumerProps, producerProps) = getConsumerAndProducerProps(params)
@@ -42,7 +47,12 @@ object KafkaExample {
     val kafkaProducer = new FlinkKafkaProducer[String](params.get("sink-topic"), schema, producerProps)
 
     // Our simple job: append a [processed] tag to each incoming string and write it to the sink
-    env.addSource(kafkaConsumer).map(in => s"$in [processed]").addSink(kafkaProducer)
+    env.addSource(kafkaConsumer)
+      .map(in => MyString(in, Map(in -> SomethingElse(1))))
+      .map(in => {
+             in.s + s" - I came from a case class: $in"
+           })
+      .addSink(kafkaProducer)
 
     // Run the job
     env.execute("Kafka Example")
