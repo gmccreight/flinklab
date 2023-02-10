@@ -3,7 +3,7 @@
 This repository is designed so that each directory in `app` is a Flink program. You can `cd` into one and run `./000_all.sh` to set up the program from scratch and run it. All you need as a prerequisite is `docker-compose` and an active docker installation (e.g. [Docker Desktop](https://www.docker.com/products/docker-desktop)).
 
 For instance, `cd app/quickstart-scala ; ./000_all.sh` will run a word count on
-a cluster on your local machine and print the result to stdout. Within that `quickstart-scala`, project tweak the code in the `override_code_to_copy_into_flinklabqs`, and run the `./000_all.sh` script again to see your changes.
+a cluster on your local machine and print the result to stdout. Within that `quickstart-scala` project, tweak the code in the `override_code_to_copy_into_flinklabqs`, and run the `./000_all.sh` script again to see your changes.
 
 ## Usage
 

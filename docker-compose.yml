@@ -38,6 +38,7 @@ services:
       ENABLE_BUILT_IN_PLUGINS: flink-s3-fs-hadoop-1.12.5.jar
       FLINK_CONF_DIR: ${FLINK_CONF_DIR:-/opt/flink/conf.local}
   console:
+    platform: linux/amd64
     build:
       context: ./
       dockerfile: Dockerfile-console
